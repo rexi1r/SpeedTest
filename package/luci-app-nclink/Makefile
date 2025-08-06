@@ -23,6 +23,7 @@ endef
 define Build/Prepare
   mkdir -p $(PKG_BUILD_DIR)/luasrc/controller \
           $(PKG_BUILD_DIR)/luasrc/view/speedtest \
+          $(PKG_BUILD_DIR)/luasrc/view/pingtest \
           $(PKG_BUILD_DIR)/htdocs/luci-static/resources/speedtest
 endef
 
@@ -35,12 +36,15 @@ endef
 define Package/luci-app-speedtest/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/speedtest
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/pingtest
 	$(INSTALL_DIR) $(1)/www/luci-static/resources/speedtest
-	
+
 	$(INSTALL_DATA) ./luasrc/controller/speedtest.lua $(1)/usr/lib/lua/luci/controller/
+	$(INSTALL_DATA) ./luasrc/controller/pingtest.lua $(1)/usr/lib/lua/luci/controller/
 	$(INSTALL_DATA) ./luasrc/view/speedtest.htm $(1)/usr/lib/lua/luci/view/speedtest/
 	$(INSTALL_DATA) ./luasrc/view/status.htm $(1)/usr/lib/lua/luci/view/speedtest/
 	$(INSTALL_DATA) ./luasrc/view/wizard.htm $(1)/usr/lib/lua/luci/view/speedtest/
+	$(INSTALL_DATA) ./luasrc/view/pingtest/index.htm $(1)/usr/lib/lua/luci/view/pingtest/
 	$(INSTALL_DATA) ./htdocs/luci-static/speedtest/* $(1)/www/luci-static/resources/speedtest/
 endef
 
