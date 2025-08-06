@@ -1,5 +1,5 @@
 function callUbus(object, method, params = {}) {
-    return L.Request.post(L.url('admin/nclink/ubus_proxy'), {
+    return L.Request.post(L.url('admin/speedtest/ubus_proxy'), {
         object: object,
         method: method,
         params: params

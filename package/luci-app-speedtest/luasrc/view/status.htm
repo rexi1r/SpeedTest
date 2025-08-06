@@ -1,5 +1,5 @@
 <%+header%>
-    <link rel="stylesheet" href="<%=resource%>/nclink/nclink.css?v=<%=luci.controller.nclink.get_package_version()%>">
+    <link rel="stylesheet" href="<%=resource%>/speedtest/speedtest.css?v=<%=luci.controller.speedtest.get_package_version()%>">
 
     <body>
         <div class="container-fluid neighborlink">
@@ -154,11 +154,11 @@
                 </div>
             </div>
         </div>
-        <script src="<%=resource%>/nclink/utils.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+        <script src="<%=resource%>/speedtest/utils.js?v=<%=luci.controller.speedtest.get_package_version()%>"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const script = document.createElement('script');
-                script.src = "<%=resource%>/nclink/status.js?v=<%=luci.controller.nclink.get_package_version()%>";
+                script.src = "<%=resource%>/speedtest/status.js?v=<%=luci.controller.speedtest.get_package_version()%>";
                 script.type = 'text/javascript';
                 script.onload = function () {
                     console.log('status.js loaded successfully.');

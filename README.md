@@ -4,7 +4,7 @@ A community-focused networking solution for OpenWrt.
 
 ## Prerequisites
 
-Before installing NCLink, ensure you have the following setup:
+Before installing SpeedTest, ensure you have the following setup:
 
 ### Hardware Requirements
 - A device that supports OpenWrt 23.05
@@ -45,7 +45,7 @@ https://github.com/nasnet-community/linkmask/raw/refs/heads/main/docs/video/set_
 
 ### Quick Installation via SSH
 
-The easiest way to install NCLink is using our automated installation script. This script will automatically detect your device's architecture and install the correct package.
+The easiest way to install SpeedTest is using our automated installation script. This script will automatically detect your device's architecture and install the correct package.
 
 Watch the installation video:
 https://github.com/nasnet-community/linkmask/raw/refs/heads/main/docs/video/Install.mp4
@@ -70,14 +70,14 @@ https://github.com/nasnet-community/linkmask/raw/refs/heads/main/docs/video/Inst
 The script will:
 - Detect your device's architecture
 - Download the appropriate package
-- Install NCLink automatically
+- Install SpeedTest automatically
 - Clean up temporary files
 
-After installation, you can access NCLink through the LuCI web interface under the Services menu.
+After installation, you can access SpeedTest through the LuCI web interface under the Services menu.
 
 ## Building Custom Packages for Advanced Developers
 
-If you need to build NCLink for a specific architecture not included in the pre-built packages, you can use the provided Docker-based build script to create custom packages.
+If you need to build SpeedTest for a specific architecture not included in the pre-built packages, you can use the provided Docker-based build script to create custom packages.
 
 ### Prerequisites for Building
 - Linux system with the following packages installed:
@@ -107,7 +107,7 @@ The build script supports the following OpenWrt target architectures:
 1. **Clone the repository** (if you haven't already):
    ```bash
    git clone https://github.com/nasnet-community/linkmask.git
-   cd nclink
+   cd speedtest
    ```
 
 2. **Edit the build script** to customize your target architectures:
@@ -142,18 +142,18 @@ The build script performs the following steps for each target:
 
 1. **Downloads the appropriate OpenWrt SDK** for the target architecture
 2. **Extracts the SDK** into a temporary directory
-3. **Copies the NCLink package** into the SDK's package directory
+3. **Copies the SpeedTest package** into the SDK's package directory
 4. **Updates and installs feeds** to resolve dependencies
-5. **Configures the build** to include the NCLink package
+5. **Configures the build** to include the SpeedTest package
 6. **Compiles the package** using the native SDK toolchain
 7. **Copies the resulting IPK** to the `packages/` directory
 
 ### Output
 
 After successful compilation, you'll find the built packages in the `packages/` directory with names like:
-- `luci-app-nclink_1.2-1_ramips_mt76x8.ipk`
-- `luci-app-nclink_1.2-1_ath79_generic.ipk`
-- `luci-app-nclink_1.2-1_ipq40xx_generic.ipk`
+- `luci-app-speedtest_1.2-1_ramips_mt76x8.ipk`
+- `luci-app-speedtest_1.2-1_ath79_generic.ipk`
+- `luci-app-speedtest_1.2-1_ipq40xx_generic.ipk`
 - etc.
 
 ### Troubleshooting Build Issues
