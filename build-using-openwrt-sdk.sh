@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PACKAGE_NAME="luci-app-nclink"
+PACKAGE_NAME="luci-app-speedtest"
 PACKAGE_DIR="$(pwd)/package/$PACKAGE_NAME"
 OUTPUT_DIR="$(pwd)/packages"
 OPENWRT_VERSION="23.05.5"

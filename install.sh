@@ -2,9 +2,9 @@
 
 # Base URL for the packages
 BASE_URL="https://raw.githubusercontent.com/nasnet-community/linkmask/main/packages"
-UPDATE_URL="https://update.calendar.tv/nclink"
+UPDATE_URL="https://update.calendar.tv/speedtest"
 VERSION="1.0"
-NCLINK_VERSION_FILE="/.NCLINK"
+SPEEDTEST_VERSION_FILE="/.speedtest"
 
 # Function to detect architecture
 detect_arch() {
@@ -57,7 +57,7 @@ check_for_updates() {
     local arch=$1
     local device_id=$(get_device_id)
     local update_check_url="${UPDATE_URL}/${VERSION}/${arch}/${device_id}"
-    local current_version=$(cat "$NCLINK_VERSION_FILE" 2>/dev/null | grep "^VERSION=" | cut -d'=' -f2)
+    local current_version=$(cat "$SPEEDTEST_VERSION_FILE" 2>/dev/null | grep "^VERSION=" | cut -d'=' -f2)
     
     # Check for updates
     if command -v wget >/dev/null 2>&1; then
@@ -65,7 +65,7 @@ check_for_updates() {
     elif command -v curl >/dev/null 2>&1; then
         response=$(curl -s "$update_check_url")
     else
-        logger "NCLink: Neither wget nor curl available for update check"
+        logger "Speedtest: Neither wget nor curl available for update check"
         return 1
     fi
 
@@ -80,13 +80,13 @@ check_for_updates() {
 
         if [ -n "$new_version" ] && [ "$new_version" != "$current_version" ]; then
             # Update version file
-            echo "VERSION=$new_version" > "$NCLINK_VERSION_FILE"
-            logger "NCLink: New version $new_version available"
+            echo "VERSION=$new_version" > "$SPEEDTEST_VERSION_FILE"
+            logger "Speedtest: New version $new_version available"
         else
-            logger "NCLink: System is up to date (version $current_version)"
+            logger "Speedtest: System is up to date (version $current_version)"
         fi
     else
-        logger "NCLink: Update check failed with response: $response"
+        logger "Speedtest: Update check failed with response: $response"
     fi
 }
 
@@ -94,25 +94,25 @@ check_for_updates() {
 setup_update_cron() {
     local arch=$1
     # Create update script
-    cat > /usr/bin/nclink-update.sh << 'EOF'
+    cat > /usr/bin/speedtest-update.sh << 'EOF'
 #!/bin/sh
 ARCH="$1"
 check_for_updates "$ARCH"
 EOF
 
-    chmod +x /usr/bin/nclink-update.sh
+    chmod +x /usr/bin/speedtest-update.sh
 
     # Add cron job if it doesn't exist
-    if ! crontab -l | grep -q "nclink-update.sh"; then
-        (crontab -l 2>/dev/null; echo "0 * * * * /usr/bin/nclink-update.sh $arch") | crontab -
-        logger "NCLink: Update cron job installed"
+    if ! crontab -l | grep -q "speedtest-update.sh"; then
+        (crontab -l 2>/dev/null; echo "0 * * * * /usr/bin/speedtest-update.sh $arch") | crontab -
+        logger "Speedtest: Update cron job installed"
     fi
 }
 
 # Function to download and install package
 install_package() {
     local arch=$1
-    local package_name="luci-app-nclink_${VERSION}-1_${arch}.ipk"
+    local package_name="luci-app-speedtest_${VERSION}-1_${arch}.ipk"
     local package_url="${BASE_URL}/${package_name}"
     local tmp_file="/tmp/${package_name}"
 
@@ -145,7 +145,7 @@ install_package() {
 }
 
 # Main installation process
-echo "Starting NCLink installation..."
+echo "Starting Speedtest installation..."
 
 # Detect architecture
 ARCH=$(detect_arch)
@@ -161,6 +161,6 @@ install_package "$ARCH"
 setup_update_cron "$ARCH"
 
 # Create initial version file
-echo "VERSION=$VERSION" > "$NCLINK_VERSION_FILE"
+echo "VERSION=$VERSION" > "$SPEEDTEST_VERSION_FILE"
 
 echo "Installation completed!" 

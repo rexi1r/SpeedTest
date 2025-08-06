@@ -10,7 +10,7 @@ for cmd in ar tar gzip; do
     fi
 done
 
-PACKAGE="luci-app-nclink"
+PACKAGE="luci-app-speedtest"
 # Ensure these are the correct target/subtarget combinations for your OpenWrt version
 TARGETS=(
   "ath79/generic"

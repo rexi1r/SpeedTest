@@ -1,6 +1,6 @@
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=luci-app-nclink
+PKG_NAME:=luci-app-speedtest
 PKG_VERSION:=1.6
 PKG_RELEASE:=1
 
@@ -8,22 +8,22 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/luci-app-nclink
+define Package/luci-app-speedtest
   SECTION:=luci
   CATEGORY:=LuCI
   SUBMENU:=Applications
   DEPENDS:=+luci-base +lua +luci-lib-jsonc +luci-lib-httpclient +wireguard-tools +kmod-wireguard +xl2tpd +ppp +kmod-pppol2tp +kmod-pppox
-  TITLE:=LuCI nclink Application
+  TITLE:=LuCI speedtest Application
 endef
 
-define Package/luci-app-nclink/description
-  This package provides a simple "nclink" application for LuCI.
+define Package/luci-app-speedtest/description
+  This package provides a simple "speedtest" application for LuCI.
 endef
 
 define Build/Prepare
   mkdir -p $(PKG_BUILD_DIR)/luasrc/controller \
-          $(PKG_BUILD_DIR)/luasrc/view/nclink \
-          $(PKG_BUILD_DIR)/htdocs/luci-static/resources/nclink
+          $(PKG_BUILD_DIR)/luasrc/view/speedtest \
+          $(PKG_BUILD_DIR)/htdocs/luci-static/resources/speedtest
 endef
 
 define Build/Configure
@@ -32,16 +32,16 @@ endef
 define Build/Compile
 endef
 
-define Package/luci-app-nclink/install
+define Package/luci-app-speedtest/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/nclink
-	$(INSTALL_DIR) $(1)/www/luci-static/resources/nclink
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/view/speedtest
+	$(INSTALL_DIR) $(1)/www/luci-static/resources/speedtest
 	
-	$(INSTALL_DATA) ./luasrc/controller/nclink.lua $(1)/usr/lib/lua/luci/controller/
-	$(INSTALL_DATA) ./luasrc/view/nclink.htm $(1)/usr/lib/lua/luci/view/nclink/
-	$(INSTALL_DATA) ./luasrc/view/status.htm $(1)/usr/lib/lua/luci/view/nclink/
-	$(INSTALL_DATA) ./luasrc/view/wizard.htm $(1)/usr/lib/lua/luci/view/nclink/
-	$(INSTALL_DATA) ./htdocs/luci-static/nclink/* $(1)/www/luci-static/resources/nclink/
+	$(INSTALL_DATA) ./luasrc/controller/speedtest.lua $(1)/usr/lib/lua/luci/controller/
+	$(INSTALL_DATA) ./luasrc/view/speedtest.htm $(1)/usr/lib/lua/luci/view/speedtest/
+	$(INSTALL_DATA) ./luasrc/view/status.htm $(1)/usr/lib/lua/luci/view/speedtest/
+	$(INSTALL_DATA) ./luasrc/view/wizard.htm $(1)/usr/lib/lua/luci/view/speedtest/
+	$(INSTALL_DATA) ./htdocs/luci-static/speedtest/* $(1)/www/luci-static/resources/speedtest/
 endef
 
-$(eval $(call BuildPackage,luci-app-nclink))
+$(eval $(call BuildPackage,luci-app-speedtest))
