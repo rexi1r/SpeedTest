@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 method: 'POST',
                 body: JSON.stringify({
                     platform: "openwrt",
-                    referrer: "nclink", 
+                    referrer: "speedtest", 
                     sessionID: sessionID
                 }),
                 headers: {
@@ -170,10 +170,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
             
             // Get network info
-            // var nclinkInfo = await uciCall('get', {'config': 'nclink'});
-            // nclinkInfo = JSON.parse(nclinkInfo.responseText);
-            // console.log('nclink Info:', nclinkInfo);
-            // deviceInfo.nclink = nclinkInfo?.values?.main || "unknown";
+            // var speedtestInfo = await uciCall('get', {'config': 'speedtest'});
+            // speedtestInfo = JSON.parse(speedtestInfo.responseText);
+            // console.log('speedtest Info:', speedtestInfo);
+            // deviceInfo.speedtest = speedtestInfo?.values?.main || "unknown";
             
             // Get VPN status
             statusText.textContent = 'Reading network connection status...';
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 configExpire: configExpire,
                 configEnabled: configEnabled,
                 wanDhcpServer: deviceInfo.wanDhcpServer,
-                nclink: deviceInfo.nclink,
+                speedtest: deviceInfo.speedtest,
                 VPN: deviceInfo.VPN
             };
         } catch (error) {
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             statusText.textContent = 'Checking LAN IP configuration...';
             
             // Call the server-side endpoint to handle IP change and reboot
-            const response = await fetch('/cgi-bin/luci/admin/nclink/change_lan_ip', {
+            const response = await fetch('/cgi-bin/luci/admin/speedtest/change_lan_ip', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

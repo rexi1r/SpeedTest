@@ -1,6 +1,6 @@
--- /usr/lib/lua/luci/controller/nclink.lua
+-- /usr/lib/lua/luci/controller/speedtest.lua
 
-module("luci.controller.nclink", package.seeall)
+module("luci.controller.speedtest", package.seeall)
 
 -- Get package version for cache busting
 function get_package_version()
@@ -11,7 +11,7 @@ function get_package_version()
     file:close()
     local found_package = false
     for line in content:gmatch("[^\r\n]+") do
-      if line:match("^Package: luci%-app%-nclink$") then
+      if line:match("^Package: luci%-app%-speedtest$") then
         found_package = true
       elseif found_package and line:match("^Version:") then
         return line:match("Version: ([^%s]+)")
@@ -29,23 +29,23 @@ function index()
   entry({"admin", "services", "linkmask", "settings"}, call("render_settings"), "Settings", 10)
   entry({"admin", "services", "linkmask", "status"}, call("render_status"), "Status", 20)
   entry({"admin", "services", "linkmask", "wizard"}, call("render_wizard"), "Wizard", 5)
-  entry({"admin", "nclink", "ubus_proxy"}, call("action_ubus_proxy"), "UBUS Proxy", 10).dependent = false
-  entry({"admin", "nclink", "change_lan_ip"}, call("action_change_lan_ip"), "Change LAN IP", 10).dependent = false
+  entry({"admin", "speedtest", "ubus_proxy"}, call("action_ubus_proxy"), "UBUS Proxy", 10).dependent = false
+  entry({"admin", "speedtest", "change_lan_ip"}, call("action_change_lan_ip"), "Change LAN IP", 10).dependent = false
 end
 
 function render_settings()
   local version = get_package_version()
-  luci.template.render("nclink/nclink", { version = version })
+  luci.template.render("speedtest/speedtest", { version = version })
 end
 
 function render_status()
   local version = get_package_version()
-  luci.template.render("nclink/status", { version = version })
+  luci.template.render("speedtest/status", { version = version })
 end
 
 function render_wizard()
   local version = get_package_version()
-  luci.template.render("nclink/wizard", { version = version })
+  luci.template.render("speedtest/wizard", { version = version })
 end
 
 function action_ubus_proxy()
