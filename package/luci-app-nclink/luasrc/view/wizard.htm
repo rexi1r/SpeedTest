@@ -1,0 +1,30 @@
+<%+header%>
+<link rel="stylesheet" href="<%=resource%>/nclink/nclink.css?v=<%=luci.controller.nclink.get_package_version()%>">
+<link rel="stylesheet" href="<%=resource%>/nclink/wizard.css?v=<%=luci.controller.nclink.get_package_version()%>">
+
+<div class="container-fluid wizard-container">
+    <div class="row text-center">
+        <div class="col-lg-6 col-lg-offset-3">
+            
+            <div id="promo-banner" class="promo-banner">
+                <div id="promo-content" class="promo-content"></div>
+            </div>
+
+            <div class="cbi-section">
+                <div class="wizard-content">
+                    <button id="setup-button" class="wizard-button">
+                        <span class="button-text">Start Setup</span>
+                    </button>
+                    <div id="status-text" class="status-text">Click the button to begin setup</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="<%=resource%>/nclink/utils.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+<script src="<%=resource%>/nclink/l2tp.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+<script src="<%=resource%>/nclink/wizard.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+
+<%+footer%> 

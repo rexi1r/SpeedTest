@@ -1,0 +1,376 @@
+<%+header%>
+    <link rel="stylesheet" href="<%=resource%>/nclink/nclink.css?v=<%=luci.controller.nclink.get_package_version()%>">
+
+    <body>
+        <div class="container-fluid neighborlink">
+            <div class="row text-center">
+                <div class="col-lg-6 col-lg-offset-3">
+
+                    <div class="cbi-map">
+
+                        <div class="cbi-separator"></div>
+
+                        <div class="cbi-section hidden">
+                            <!-- WAN Interface -->
+                            <h3>Configure the WAN Interface</h3>
+                            <div class="ncflex-flex-row">
+                                <div class="cbi-checkbox">
+                                        <label class="cbi-value-title">Enable DHCP</label>
+                                        <div class="cbi-value-field">
+                                            <input type="checkbox" id="dhcp-toggle" checked title="Enable DHCP">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Static IP</label>
+                                        <div class="cbi-value-field">
+                                            <input type="text" class="cbi-input-text" id="static-ip"
+                                                placeholder="e.g., 192.168.1.100" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Subnet Mask</label>
+                                        <div class="cbi-value-field">
+                                            <input type="text" class="cbi-input-text" id="subnet-mask"
+                                                placeholder="e.g., 255.255.255.0" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Gateway</label>
+                                        <div class="cbi-value-field">
+                                            <input type="text" class="cbi-input-text" id="gateway"
+                                                placeholder="e.g., 192.168.1.1" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">DNS</label>
+                                        <div class="cbi-value-field">
+                                            <input type="text" class="cbi-input-text" id="dns" placeholder="e.g., 8.8.8.8"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cbi-page-actions">
+                                <input type="button" class="cbi-button cbi-button-save" id="save-interfaces"
+                                    value="Save Configuration">
+                                <input type="button" class="cbi-button cbi-button-reset" id="reload-interfaces"
+                                    value="Reload">
+                            </div>
+                        </div>
+
+
+                        <div class="cbi-separator"></div>
+
+                        <div class="cbi-section">
+                            <!-- Wireless Interface -->
+                            <h3>Configure the Wireless Interface</h3>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-checkbox">
+                                        <label class="cbi-value-title">Enable Wireless</label>
+                                        <div class="cbi-value-field">
+                                        <input type="checkbox" id="wireless-toggle" title="Enable Wireless">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                        <div class="cbi-value">
+                                            <label class="cbi-value-title">SSID</label>
+                                            <div class="cbi-value-field">
+                                            <input type="text" class="cbi-input-text" id="ssid" placeholder="e.g., MyNetwork"
+                                                disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Password</label>
+                                        <div class="cbi-value-field">
+                                            <input type="password" class="cbi-input-text" id="password"
+                                                placeholder="e.g., password123" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Encryption</label>
+                                        <div class="cbi-value-field">
+                                    <select id="encryption" disabled title="Select Encryption Type">
+                                        <option value="sae-mixed" selected>WPA2-PSK/WPA3-SAE Mixed Mode</option>
+                                        <option value="sae">WPA3-SAE</option>
+                                        <option value="psk-mixed">WPA2-PSK/WPA-PSK Mixed Mode</option>
+                                        <option value="psk2">WPA2-PSK</option>
+                                    </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cbi-page-actions">
+                                <input type="button" class="cbi-button cbi-button-save" id="save-wireless"
+                                    value="Save Wireless Configuration">
+                                <input type="button" class="cbi-button cbi-button-reset" id="reload-wireless"
+                                    value="Reload Wireless">
+                            </div>
+
+                        </div>
+
+
+                        <div class="cbi-separator"></div>
+
+                        <div class="cbi-section">
+                            <!-- VPN Configuration -->
+                            <h3>Configure VPN</h3>
+                            <div class="cbi-value">
+                                <label class="cbi-value-title">VPN Type</label>
+                                <div class="cbi-value-field">
+                                    <div class="cbi-radio-group">
+                                        <input type="radio" id="vpn-wireguard" name="vpn-type" value="wireguard" checked>
+                                        <label for="vpn-wireguard" class="cbi-radio-label">WireGuard</label>
+                                    </div>
+                                    <div class="cbi-radio-group">
+                                        <input type="radio" id="vpn-l2tp" name="vpn-type" value="l2tp">
+                                        <label for="vpn-l2tp" class="cbi-radio-label">L2TP</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- WireGuard Configuration -->
+                            <div id="wireguard-config">
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Private Key</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-private-key"
+                                            placeholder="Enter Private Key">
+                                    </div>
+                                </div>
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Address</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-address"
+                                            placeholder="e.g., 10.0.0.1/24">
+                                    </div>
+                                </div>
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">DNS</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-dns"
+                                            placeholder="e.g., 8.8.8.8">
+                                    </div>
+                                </div>
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Public Key</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-public-key"
+                                            placeholder="Enter Public Key">
+                                    </div>
+                                </div>
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Endpoint Host</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-endpoint-host"
+                                            placeholder="e.g., 192.168.1.1">
+                                    </div>
+                                </div>
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Endpoint Port</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-endpoint-port"
+                                            placeholder="e.g., 51820">
+                                    </div>
+                                </div>
+
+                                <div class="cbi-value">
+                                    <label class="cbi-value-title">Preshared Key</label>
+                                    <div class="cbi-value-field">
+                                        <input type="text" class="cbi-input-text" id="wg-preshared-key"
+                                            placeholder="Enter Preshared Key">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- L2TP Configuration -->
+                            <div id="l2tp-config">
+                                <div class="ncflex-flex-row">
+                                    <div class="ncflex-col-16">
+                                        <div class="cbi-value">
+                                            <label class="cbi-value-title">Server Address</label>
+                                            <div class="cbi-value-field">
+                                                <input type="text" class="cbi-input-text" id="l2tp-host"
+                                                    placeholder="Enter Host">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ncflex-flex-row">
+                                    <div class="ncflex-col-6">
+                                        <div class="cbi-value">
+                                            <label class="cbi-value-title" for="l2tp-username">Username</label>
+                                            <div class="cbi-value-field">
+                                                <input type="text" class="form-control cbi-input-text"
+                                                    id="l2tp-username" placeholder="Enter Username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ncflex-col-6">
+                                        <div class="cbi-value">
+                                            <label class="cbi-value-title">Password</label>
+                                            <div class="cbi-value-field">
+                                                <input type="password" class="cbi-input-text" id="l2tp-password"
+                                                    placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cbi-page-actions">
+                                <input type="button" class="cbi-button cbi-button-save" id="save-vpn"
+                                    value="Save VPN Configuration">
+                                <input type="button" class="cbi-button cbi-button-reset" id="reload-vpn"
+                                    value="Reload VPN">
+                            </div>
+                        </div>
+
+                        <div class="cbi-separator"></div>
+
+                        <!-- Advanced Settings Section -->
+                        <div class="cbi-section hidden">
+                            <h3>Advanced Settings</h3>
+
+                            <div class="cbi-checkbox">
+                                <label class="cbi-value-title">Kill Switch
+                                    <span class="tooltip-icon"
+                                        data-tooltip="Prevents internet access when VPN connection drops">ⓘ</span>
+                                </label>
+                                <div class="cbi-value-field">
+                                    <input type="checkbox" id="killswitch-toggle">
+                                </div>
+                            </div>
+
+                            <div class="cbi-checkbox">
+                                <label class="cbi-value-title">Firewall
+                                    <span class="tooltip-icon"
+                                        data-tooltip="Enables firewall rules for VPN traffic">ⓘ</span>
+                                </label>
+                                <div class="cbi-value-field">
+                                    <input type="checkbox" id="firewall-toggle">
+                                </div>
+                            </div>
+
+                            <div class="cbi-checkbox">
+                                <label class="cbi-value-title">Custom DNS
+                                    <span class="tooltip-icon"
+                                        data-tooltip="Override system DNS with custom DNS servers">ⓘ</span>
+                                </label>
+                                <div class="cbi-value-field">
+                                    <input type="checkbox" id="custom-dns-toggle">
+                                    <input type="text" class="cbi-input-text" id="custom-dns-input"
+                                        placeholder="e.g., 8.8.8.8, 8.8.4.4" disabled>
+                                </div>
+                            </div>
+
+                            <div class="cbi-page-actions">
+                                <input type="button" class="cbi-button cbi-button-save" id="save-advanced"
+                                    value="Save Advanced Settings">
+                                <input type="button" class="cbi-button cbi-button-reset" id="reload-advanced"
+                                    value="Reload Advanced Settings">
+                            </div>
+                        </div>
+
+                        <div class="cbi-separator"></div>
+
+                        <!-- Reset Configuration Section -->
+                        <div class="cbi-section">
+                            <h3>Reset Configuration</h3>
+                            <div class="cbi-value">
+                                <label class="cbi-value-title">Remove All VPN Settings</label>
+                                <div class="cbi-value-field">
+                                    <p class="help-text">This will remove all VPN configurations, killswitch rules, and firewall settings set by this package, then restart the network.</p>
+                                    <input type="button" class="cbi-button cbi-button-remove" id="reset-config"
+                                        value="Reset All Settings">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="<%=resource%>/nclink/utils.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+        <script src="<%=resource%>/nclink/l2tp.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Create a new <script> element
+                const script = document.createElement('script');
+                script.src = "<%=resource%>/nclink/nclink.js?v=<%=luci.controller.nclink.get_package_version()%>";  // Dynamically load the JS file with version
+                script.type = 'text/javascript';
+                script.onload = function () {
+                    console.log('nclink.js loaded successfully.');
+                    // Call all reload functions after script loads
+                    loadWirelessConfig();
+                    loadVpnConfig();
+                };
+                script.onerror = function () {
+                    console.error('Failed to load nclink.js');
+                };
+
+                // Append the <script> tag to the body or head of the document
+                document.body.appendChild(script);  // or document.head.appendChild(script);
+
+                const dhcpToggle = document.getElementById('dhcp-toggle');
+                const staticIp = document.getElementById('static-ip');
+                const subnetMask = document.getElementById('subnet-mask');
+                const gateway = document.getElementById('gateway');
+                const dns = document.getElementById('dns');
+
+                dhcpToggle.addEventListener('change', function () {
+                    const isDhcpEnabled = dhcpToggle.checked;
+                    staticIp.disabled = isDhcpEnabled;
+                    subnetMask.disabled = isDhcpEnabled;
+                    gateway.disabled = isDhcpEnabled;
+                    dns.disabled = isDhcpEnabled;
+                });
+
+                const wirelessToggle = document.getElementById('wireless-toggle');
+                const ssid = document.getElementById('ssid');
+                const password = document.getElementById('password');
+                const encryption = document.getElementById('encryption');
+                const separateBands = document.getElementById('separate-bands');
+
+                wirelessToggle.addEventListener('change', function () {
+                    const isWirelessEnabled = wirelessToggle.checked;
+                    ssid.disabled = !isWirelessEnabled;
+                    password.disabled = !isWirelessEnabled;
+                    encryption.disabled = !isWirelessEnabled;
+                    separateBands.disabled = !isWirelessEnabled;
+                });
+
+                // Custom DNS toggle functionality
+                const customDnsToggle = document.getElementById('custom-dns-toggle');
+                const customDnsInput = document.getElementById('custom-dns-input');
+
+                customDnsToggle.addEventListener('change', function () {
+                    customDnsInput.disabled = !customDnsToggle.checked;
+                });
+            });
+        </script>
+    </body>
+    <%+footer%>

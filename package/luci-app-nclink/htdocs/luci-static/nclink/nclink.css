@@ -1,0 +1,389 @@
+/* nclink Package Styles */
+
+/* Container styles */
+.container-fluid {
+    padding: 20px;
+}
+
+/* Section styles */
+.cbi-section {
+    background: var(--background-color-high);
+    border: 1px solid var(--border-color-medium);
+    border-radius: 13px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cbi-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color-high), var(--success-color-high));
+}
+
+.cbi-section h3 {
+    margin-bottom: 20px;
+    color: var(--text-color-high);
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.cbi-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: var(--primary-color-high);
+}
+
+/* Form element styles */
+.cbi-value {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.cbi-checkbox {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cbi-value-title {
+    display: block;
+    margin: 3px;
+    font-weight: 500;
+    color: var(--text-color-high);
+}
+
+.cbi-input-text {
+    width: 100%;
+    /* padding: 8px; */
+    border: 1px solid var(--border-color-high);
+    border-radius: 8px;
+    background: var(--background-color-high);
+    color: var(--text-color-high);
+}
+
+.cbi-input-text:disabled {
+    border-radius: 8px;
+    background: var(--background-color-low);
+    opacity: 0.7;
+}
+
+
+.cbi-value label.cbi-value-title {
+    flex: 0 0 0;
+}
+
+.cbi-value-field {
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Button styles */
+.cbi-button {
+    padding: 3px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color-high);
+    background: var(--background-color-high);
+    color: var(--text-color-high);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cbi-button:hover {
+    background: var(--background-color-medium);
+}
+
+.cbi-button-save {
+    background: var(--success-color-high);
+    color: var(--on-success-color);
+    border-color: var(--success-color-high);
+}
+
+.cbi-button-reset {
+    background: var(--error-color-high);
+    color: var(--on-error-color);
+    border-color: var(--error-color-high);
+}
+
+.cbi-radio-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 16px;
+}
+
+.cbi-radio-label {
+    margin-left: 4px;
+}
+
+/* Toggle switch styles */
+input[type="checkbox"] {
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none;
+    background: var(--background-color-low);
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    margin-left: 8px;
+}
+input[type="checkbox"]:checked::after {
+    display: none;
+}
+
+input[type="checkbox"]:checked {
+    background: var(--success-color-high);
+}
+
+input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--background-color-high);
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked::before {
+    left: 22px;
+}
+
+/* VPN configuration section */
+#wireguard-config,
+#l2tp-config {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--background-color-low);
+    border-radius: 13px;
+}
+
+/*  specific cbi-page-actions */
+.neighborlink .cbi-page-actions {
+    border-top: none;
+    background: none;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    padding: 0px;
+}
+
+/* Tooltip styles */
+.tooltip-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--background-color-medium);
+    color: var(--text-color-high);
+    cursor: help;
+    margin-left: 5px;
+    position: relative;
+}
+
+.tooltip-icon:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--background-color-high);
+    color: var(--text-color-high);
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color-medium);
+    white-space: nowrap;
+    z-index: 1000;
+    margin-left: 10px;
+}
+
+/* Custom DNS input field styles */
+#custom-dns-input {
+    max-width: 200px;
+    margin-right: 10px;
+}
+
+#custom-dns-toggle {
+    vertical-align: middle;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 10px;
+    }
+    
+    .cbi-section {
+        padding: 15px;
+    }
+    
+    .cbi-value-title {
+        flex: 0 0 100%;
+        margin-bottom: 5px;
+    }
+    
+    .cbi-value-field {
+        margin-left: 0;
+        flex: 0 0 100%;
+    }
+    
+    .tooltip-icon:hover::after {
+        white-space: normal;
+        max-width: 200px;
+    }
+    
+    #custom-dns-input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+} 
+
+/* be calm! NcFlex is here */
+.ncflex-flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.ncflex-col-4 {
+    width: 33.33333333333333%;
+}
+
+.ncflex-col-6 {
+    width: 50%;
+}
+
+.ncflex-col-8 {
+    width: 66.66666666666666%;
+}
+.ncflex-col-16 {
+    width: 100%;
+}
+
+.ncflex-form-section-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.2em;
+}
+
+/* Status page specific styles */
+.status-value {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--background-color-low);
+    color: var(--text-color-high);
+    font-family: monospace;
+    min-width: 100px;
+    text-align: center;
+}
+
+.status-value.connected {
+    background: var(--success-color-high);
+    color: var(--on-success-color);
+}
+
+.status-value.disconnected {
+    background: var(--error-color-high);
+    color: var(--on-error-color);
+}
+
+.status-value.warning {
+    background: var(--warning-color-high);
+    color: var(--on-warning-color);
+}
+
+/* Wizard page styles */
+.wizard-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wizard-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+}
+
+.wizard-button {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid var(--border-color-high);
+    background: var(--background-color-high);
+    color: var(--text-color-high);
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.wizard-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.wizard-button.processing {
+    border-color: var(--warning-color-high);
+    animation: pulse 1.5s infinite;
+}
+
+.wizard-button.success {
+    border-color: var(--success-color-high);
+    background: var(--success-color-high);
+    color: var(--on-success-color);
+}
+
+.wizard-button.error {
+    border-color: var(--error-color-high);
+    background: var(--error-color-high);
+    color: var(--on-error-color);
+}
+
+.status-text {
+    font-size: 1.1em;
+    color: var(--text-color-high);
+    text-align: center;
+    min-height: 24px;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--warning-color-high-rgb), 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(var(--warning-color-high-rgb), 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(var(--warning-color-high-rgb), 0);
+    }
+}

@@ -1,0 +1,173 @@
+<%+header%>
+    <link rel="stylesheet" href="<%=resource%>/nclink/nclink.css?v=<%=luci.controller.nclink.get_package_version()%>">
+
+    <body>
+        <div class="container-fluid neighborlink">
+            <div class="row text-center">
+                <div class="col-lg-6 col-lg-offset-3">
+                    <div class="cbi-map">
+                        <!-- WAN Status Section -->
+                        <div class="cbi-section">
+                            <h3>WAN Interface Status</h3>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Connection Type</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-proto" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Status</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-status" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">IP Address</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-ip" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Gateway</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-gateway" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">DNS</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-dns" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Uptime</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wan-uptime" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WiFi Status Section -->
+                        <div class="cbi-section">
+                            <h3>Wireless Status</h3>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Status</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wifi-status" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Channel</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wifi-channel" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Band</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wifi-band" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Interfaces</label>
+                                        <div class="cbi-value-field">
+                                            <span id="wifi-interfaces" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VPN Status Section -->
+                        <div class="cbi-section">
+                            <h3>VPN Status</h3>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Status</label>
+                                        <div class="cbi-value-field">
+                                            <span id="vpn-status" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Type</label>
+                                        <div class="cbi-value-field">
+                                            <span id="vpn-type" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ncflex-flex-row">
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">IP Address</label>
+                                        <div class="cbi-value-field">
+                                            <span id="vpn-ip" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ncflex-col-6">
+                                    <div class="cbi-value">
+                                        <label class="cbi-value-title">Uptime</label>
+                                        <div class="cbi-value-field">
+                                            <span id="vpn-uptime" class="status-value">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cbi-page-actions">
+                            <input type="button" class="cbi-button cbi-button-save" id="refresh-status" value="Refresh Status">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="<%=resource%>/nclink/utils.js?v=<%=luci.controller.nclink.get_package_version()%>"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const script = document.createElement('script');
+                script.src = "<%=resource%>/nclink/status.js?v=<%=luci.controller.nclink.get_package_version()%>";
+                script.type = 'text/javascript';
+                script.onload = function () {
+                    console.log('status.js loaded successfully.');
+                };
+                script.onerror = function () {
+                    console.error('Failed to load status.js');
+                };
+                document.body.appendChild(script);
+            });
+        </script>
+    </body>
+<%+footer%> 

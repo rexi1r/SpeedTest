@@ -1,0 +1,2 @@
+config nclink 'main'
+    option isConfigured '0'
