@@ -1,0 +1,167 @@
+<%+header%>
+<style>
+.ping-table { width:100%; border-collapse:collapse; margin-top:1em; }
+.ping-table th, .ping-table td { padding:8px; border-bottom:1px solid #ddd; }
+.ping-table th { background:#f2f2f2; font-weight:600; text-align: left; } /* Align headers left */
+</style>
+<h2>Ping & Speed Test</h2>
+<div style="display: flex; align-items: center; gap: 20px;">
+  <div class="cbi-section" style="display: flex; flex-direction: row; align-items: center; gap: 10px;">
+    <label class="cbi-input-label" for="iface">Interface for Ping Test:</label>
+    <select id="iface" class="cbi-input-select">
+      <option value="wan">WAN (Iran)</option>
+      <option value="pppossh-sshvpn">SSH‑VPN</option>
+    </select>
+  </div>
+  <div class="cbi-section" style="display: flex; flex-direction: row; align-items: center; gap: 10px;">
+    <label class="cbi-input-label" for="dest">Destination for Ping Test:</label>
+    <select id="dest" class="cbi-input-select">
+      <option value="varzesh3.com">varzesh3.com</option>
+      <option value="arvancloud.ir">arvancloud.ir</option>
+      <option value="playstation.com">playstation.com</option>
+      <option value="wikipedia.org">wikipedia.org</option>
+      <option value="bing.com">bing.com</option>
+      <option value="google.com">google.com</option>
+      <option value="github.com">github.com</option>
+      <option value="aparat.com">aparat.com</option>
+      <option value="divar.ir">divar.ir</option>
+      <option value="digikala.com">digikala.com</option>
+      <option value="8.8.8.8">8.8.8.8</option>
+      <option value="4.2.2.4">4.2.2.4</option>
+    </select>
+  </div>
+  <div class="cbi-action">
+    <button type="button" id="run-ping" style="margin:5px;" class="cbi-button btn btn-primary">Run Ping Test</button>
+    <button type="button" id="run-speedtest" style="margin:5px;" class="cbi-button btn btn-primary">Run Speed Test</button>
+  </div>
+</div>
+<pre id="status" style="margin-top:1em;color:#333;">‑</pre>
+<div id="results"></div>
+<%+footer%>
+
+<script>
+;(function(){
+  const iface = document.getElementById("iface"),
+        dest  = document.getElementById("dest"),
+        runPingBtn= document.getElementById("run-ping"),
+        runSpeedtestBtn= document.getElementById("run-speedtest"),
+        status= document.getElementById("status"),
+        results=document.getElementById("results");
+
+  runPingBtn.addEventListener("click", async () => {
+    status.textContent = "⏳ Running ping test...";
+    results.innerHTML = "";
+
+    try {
+      const params = new URLSearchParams({
+        iface: iface.value,
+        dest: dest.value,
+        token: L.env.token
+      });
+
+      const resp = await fetch("<%= luci.dispatcher.build_url('admin','services','pingtest','run_ping') %>", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        body: params
+      });
+
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(`HTTP ${resp.status}: ${text.slice(0,200)}`);
+      }
+
+      const json = await resp.json();
+      if (json.err) throw new Error(json.err);
+      if (json.token) L.env.token = json.token;
+
+      // Ping Test Results Table
+      let html = `
+        <table class="ping-table">
+          <tr><th colspan="2" style="text-align:center;">Ping Test (to ${json.dest} via ${json.iface})</th></tr>
+          <tr><th>Interface</th><td>${json.iface}</td></tr>
+          <tr><th>Destination</th><td>${json.dest}</td></tr>
+          <tr><th>Ping Count (Sent/Recv)</th><td>${json.sent} / ${json.recv}</td></tr>
+          <tr><th>Packet Loss %</th><td>${json.loss_pct.toFixed(1)}</td></tr>
+          <tr><th>Ping Min/Avg/Max (ms)</th><td>${json.min_ping} / ${json.avg_ping} / ${json.max_ping}</td></tr>
+        </table>
+      `;
+
+      results.innerHTML = html;
+      status.textContent = "✅ Ping test completed.";
+
+    } catch (err) {
+      status.textContent = "❌ " + err.message;
+      results.innerHTML = ""; // Clear results on error
+    }
+  });
+
+  runSpeedtestBtn.addEventListener("click", async () => {
+    status.textContent = "⏳ Running speed test for both WAN and SSH-VPN interfaces...";
+    results.innerHTML = "";
+
+    try {
+      const params = new URLSearchParams({
+        token: L.env.token
+      });
+
+      const resp = await fetch("<%= luci.dispatcher.build_url('admin','services','pingtest','run_speedtest') %>", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        body: params
+      });
+
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(`HTTP ${resp.status}: ${text.slice(0,200)}`);
+      }
+
+      const json = await resp.json();
+      if (json.err) throw new Error(json.err);
+      if (json.token) L.env.token = json.token;
+
+      let html = ``;
+
+      // WAN Speedtest Results Table
+      html += `
+        <h3 style="margin-top:2em;">WAN Speedtest Results</h3>
+        <table class="ping-table">
+          <tr><th>Interface</th><td>WAN</td></tr>
+          <tr><th>Download (Mbps)</th><td>${json.wan_st_download}</td></tr>
+          <tr><th>Upload (Mbps)</th><td>${json.wan_st_upload}</td></tr>
+          <tr><th>Ping (ms)</th><td>${json.wan_st_ping}</td></tr>
+          <tr><th>Server Name</th><td>${json.wan_st_name}</td></tr>
+          <tr><th>Server Country</th><td>${json.wan_st_country}</td></tr>
+          <tr><th>Server Sponsor</th><td>${json.wan_st_sponsor}</td></tr>
+          <tr><th>Client IP</th><td>${json.wan_st_ip}</td></tr>
+          <tr><th>Client ISP</th><td>${json.wan_st_isp}</td></tr>
+        </table>
+      `;
+
+      // VPN Speedtest Results Table
+      html += `
+        <h3 style="margin-top:2em;">VPN Speedtest Results</h3>
+        <table class="ping-table">
+          <tr><th>Interface</th><td>SSH-VPN</td></tr>
+          <tr><th>Download (Mbps)</th><td>${json.vpn_st_download}</td></tr>
+          <tr><th>Upload (Mbps)</th><td>${json.vpn_st_upload}</td></tr>
+          <tr><th>Ping (ms)</th><td>${json.vpn_st_ping}</td></tr>
+          <tr><th>Server Name</th><td>${json.vpn_st_name}</td></tr>
+          <tr><th>Server Country</th><td>${json.vpn_st_country}</td></tr>
+          <tr><th>Server Sponsor</th><td>${json.vpn_st_sponsor}</td></tr>
+          <tr><th>Client IP</th><td>${json.vpn_st_ip}</td></tr>
+          <tr><th>Client ISP</th><td>${json.vpn_st_isp}</td></tr>
+        </table>
+      `;
+
+      results.innerHTML = html;
+      status.textContent = "✅ Speed test completed.";
+
+    } catch (err) {
+      status.textContent = "❌ " + err.message;
+      results.innerHTML = ""; // Clear results on error
+    }
+  });
+})();
+</script>
